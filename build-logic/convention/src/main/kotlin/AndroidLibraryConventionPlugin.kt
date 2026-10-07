@@ -34,6 +34,7 @@ abstract class AndroidLibraryConventionPlugin : Plugin<Project> {
         with(target) {
             apply(plugin = "com.android.library")
             apply(plugin = "nowinandroid.android.lint")
+            apply(plugin = "io.github.tensky.coldspot")
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)

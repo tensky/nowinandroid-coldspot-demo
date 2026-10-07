@@ -1,3 +1,44 @@
+ColdSpot demo
+=============
+
+This fork of [Now in Android](https://github.com/android/nowinandroid) has
+[ColdSpot](https://github.com/tensky/ColdSpot) set up, as a team would set it up in an app of its
+own. ColdSpot shows, inside the running debug app, which lines you changed and which of them have
+executed.
+
+```
+git clone https://github.com/tensky/nowinandroid.git
+cd nowinandroid
+./gradlew :app:installDemoCoverage
+```
+
+Open the app and tap ColdSpot's bubble, or the "ColdSpot" icon in the launcher. Use the app, and the
+changed lines turn from red to green as they execute.
+
+- **The set-up** is what the [`coldspot-base`](https://github.com/tensky/nowinandroid/tree/coldspot-base)
+  branch adds to Now in Android:
+  [one commit](https://github.com/android/nowinandroid/compare/main...tensky:nowinandroid:coldspot-base),
+  with the plugin from Maven Central applied in two convention plugins.
+- **The changed lines** are what `main` adds to `coldspot-base`:
+  [this diff](https://github.com/tensky/nowinandroid/compare/coldspot-base...main), which is what
+  ColdSpot shows in the app. Change a line of your own, build again, and it is there too.
+- **The base** is named in [`gradle.properties`](gradle.properties), as
+  `coldspot.base=origin/coldspot-base`, because this demo keeps its changes on the default branch. A
+  repository whose changes are on feature branches needs no such line: ColdSpot takes the remote's
+  default branch.
+- **`ColdSpot.open(context)`** is behind the "ColdSpot" button next to "Done" on the first-run topic
+  picker. ColdSpot's runtime is in the coverage build only, so the call is in the module's
+  [coverage source set](feature/foryou/impl/src/coverage/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/OpenColdSpot.kt),
+  with a twin that does nothing in `debug` and in `release`, and the runtime is a `compileOnly`
+  dependency in the module's [`build.gradle.kts`](feature/foryou/impl/build.gradle.kts).
+
+Clone with the history and both branches, as `git clone` does by default: ColdSpot needs
+`origin/coldspot-base` to diff from.
+
+Everything below is Now in Android's own README.
+
+---
+
 ![Now in Android](docs/images/nia-splash.jpg "Now in Android")
 
 <a href="https://play.google.com/store/apps/details?id=com.google.samples.apps.nowinandroid"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70"></a>

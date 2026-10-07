@@ -28,6 +28,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+// ColdSpot's own launcher icon, next to the bubble it shows by default
+coldSpot {
+    launcherIcon = true
+}
+
 android {
     defaultConfig {
         applicationId = "com.google.samples.apps.nowinandroid"

@@ -32,6 +32,7 @@ abstract class AndroidApplicationConventionPlugin : Plugin<Project> {
             apply(plugin = "com.android.application")
             apply(plugin = "nowinandroid.android.lint")
             apply(plugin = "com.dropbox.dependency-guard")
+            apply(plugin = "io.github.tensky.coldspot")
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)

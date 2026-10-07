@@ -37,6 +37,7 @@ kotlin {
 }
 
 dependencies {
+    implementation("io.github.tensky.coldspot:io.github.tensky.coldspot.gradle.plugin:0.1.0-alpha01") // ColdSpot, from Maven Central
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.android.tools.common)
     compileOnly(libs.compose.gradlePlugin)
