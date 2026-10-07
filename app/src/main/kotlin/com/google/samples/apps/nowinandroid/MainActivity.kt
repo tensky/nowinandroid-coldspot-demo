@@ -79,6 +79,14 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        //Just to show in coldspot whether rotating screen would be captured.
+        val launchKind = if (savedInstanceState == null) {
+            "cold"
+        } else {
+            "recreated"
+        }
+        android.util.Log.d("ColdSpot4e", "launch: $launchKind")
+
         // We keep this as a mutable state, so that we can track changes inside the composition.
         // This allows us to react to dark/light mode changes.
         var themeSettings by mutableStateOf(

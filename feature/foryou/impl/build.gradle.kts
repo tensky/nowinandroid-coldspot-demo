@@ -32,6 +32,11 @@ dependencies {
     implementation(projects.feature.foryou.api)
     implementation(projects.feature.topic.api)
     implementation(libs.androidx.activity.compose)
+    // ColdSpot's runtime, for the ColdSpot.open(context) in src/coverage. ColdSpot's plugin adds it to the
+    // application module only, so a library module that calls it names it itself: compileOnly, because the app's
+    // coverage variant packages it, at the plugin's version. Not coverageCompileOnly: the plugin adds the coverage
+    // build type after this script has run, so that configuration does not exist here yet.
+    compileOnly("io.github.tensky.coldspot:runtime:0.1.0-alpha01")
 
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.robolectric)

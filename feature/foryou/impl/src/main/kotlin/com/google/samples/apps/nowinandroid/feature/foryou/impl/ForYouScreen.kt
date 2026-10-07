@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.feature.foryou.impl
 
+import android.content.Context
 import android.net.Uri
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -158,7 +159,7 @@ internal fun ForYouScreen(
         itemsAvailable = itemsAvailable,
     )
     TrackScrollJank(scrollableState = state, stateName = "forYou:feed")
-
+    val localContext = LocalContext.current
     Box(
         modifier = modifier
             .fillMaxSize(),
@@ -176,6 +177,7 @@ internal fun ForYouScreen(
                 onboardingUiState = onboardingUiState,
                 onTopicCheckedChanged = onTopicCheckedChanged,
                 saveFollowedTopics = saveFollowedTopics,
+                context = localContext,
                 // Custom LayoutModifier to remove the enforced parent 16.dp contentPadding
                 // from the LazyVerticalGrid and enable edge-to-edge scrolling for this section
                 interestsItemModifier = Modifier.layout { measurable, constraints ->
@@ -259,13 +261,14 @@ private fun LazyStaggeredGridScope.onboarding(
     onboardingUiState: OnboardingUiState,
     onTopicCheckedChanged: (String, Boolean) -> Unit,
     saveFollowedTopics: () -> Unit,
+    context: Context,
     interestsItemModifier: Modifier = Modifier,
 ) {
     when (onboardingUiState) {
         OnboardingUiState.Loading,
         OnboardingUiState.LoadFailed,
         OnboardingUiState.NotShown,
-        -> Unit
+            -> Unit
 
         is OnboardingUiState.Shown -> {
             item(span = StaggeredGridItemSpan.FullLine, contentType = "onboarding") {
@@ -301,11 +304,24 @@ private fun LazyStaggeredGridScope.onboarding(
                             enabled = onboardingUiState.isDismissable,
                             modifier = Modifier
                                 .padding(horizontal = 24.dp)
-                                .widthIn(364.dp)
+                                .weight(1f)
                                 .fillMaxWidth(),
                         ) {
                             Text(
                                 text = stringResource(R.string.feature_foryou_api_done),
+                            )
+                        }
+
+                        NiaButton(
+                            onClick = { openColdSpot(context) },
+                            enabled = true,
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp)
+                                .weight(1f)
+                                .fillMaxWidth(),
+                        ) {
+                            Text(
+                                text = "Open ColdSpot",
                             )
                         }
                     }
@@ -494,7 +510,7 @@ private fun feedItemsSize(
         OnboardingUiState.Loading,
         OnboardingUiState.LoadFailed,
         OnboardingUiState.NotShown,
-        -> 0
+            -> 0
 
         is OnboardingUiState.Shown -> 1
     }
